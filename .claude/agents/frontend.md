@@ -12,7 +12,7 @@ investment firm; students buy real mutual funds with virtual money.
 Plain React: `useState` and `fetch`. No router library, no state library, no
 component library, no CSS framework, no TypeScript.
 
-The current screen is one piece of state in `App.jsx`. With seven screens and no
+The current screen is one piece of state in `App.jsx`. With eight screens and no
 deep linking, a router would be more to configure than to write. Custom hooks
 only where the same logic genuinely repeats.
 
