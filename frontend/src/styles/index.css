@@ -1,0 +1,276 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
+:root {
+  --ground: #f7f5f0;
+  --surface: #ffffff;
+  --ink: #17191c;
+  --muted: #5c6068;
+  --line: #e3dfd6;
+  --accent: #1f4e5f;
+  --accent-dark: #163b48;
+  --accent-soft: #e8f0f1;
+  --gain: #15683f;
+  --loss: #a8322a;
+  --flagbg: #fdf3e0;
+  --flagline: #ebd9b4;
+  --flagink: #6b5320;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+h1 { font-size: 34px; line-height: 1.15; }
+h2 { font-size: 22px; }
+h3 { font-size: 17px; }
+
+a { color: var(--accent); }
+a:hover { color: var(--accent-dark); }
+
+/* Every <p> sits inside a .stack, which already spaces things with its own
+   gap -- the browser's default paragraph margin would double that spacing. */
+p { margin: 0; }
+
+/* 16px gutters, never a horizontal scrollbar */
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+
+.page-narrow {
+  max-width: 460px;
+}
+
+/* Every number lines up under the one above it */
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.gain { color: var(--gain); font-weight: 600; }
+.loss { color: var(--loss); font-weight: 600; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.stack { display: flex; flex-direction: column; gap: 16px; }
+.row { display: flex; gap: 12px; align-items: center; }
+.row-between { display: flex; gap: 12px; align-items: baseline; justify-content: space-between; }
+.grow { flex-grow: 1; }
+.muted { color: var(--muted); font-size: 14px; }
+.tiny { font-size: 13px; color: var(--muted); }
+.center { text-align: center; }
+
+label,
+.field-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 13px 14px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+input:focus,
+select:focus,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+button {
+  font: inherit;
+  font-weight: 600;
+  padding: 13px 22px;
+  min-height: 44px; /* touch target */
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) { background: var(--accent-dark); }
+button:disabled { opacity: 0.55; cursor: not-allowed; }
+
+button.secondary {
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--line);
+}
+button.secondary:hover:not(:disabled) { background: var(--accent-soft); }
+
+button.link {
+  background: none;
+  border: none;
+  color: var(--accent);
+  padding: 4px;
+  min-height: auto;
+  text-decoration: underline;
+}
+/* Same specificity tie as .choice: without this, button:hover's dark
+   background wins and boxes in what should stay a plain text link. */
+button.link:hover:not(:disabled) {
+  background: none;
+  color: var(--accent-dark);
+}
+
+.notice {
+  background: var(--flagbg);
+  border: 1px solid var(--flagline);
+  color: var(--flagink);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.error {
+  background: #fdeceb;
+  border: 1px solid #f0c4c0;
+  color: var(--loss);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 14px;
+}
+
+.flag {
+  display: inline-block;
+  background: var(--flagbg);
+  border: 1px solid var(--flagline);
+  color: var(--flagink);
+  border-radius: 999px;
+  padding: 4px 11px;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 2px 4px 2px 0;
+}
+
+.hero {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 16px;
+  padding: 26px 24px;
+}
+.hero .label { color: #bbd4d9; font-size: 13px; }
+
+/* The gain and loss colours are chosen to sit on the pale background. On the
+   dark hero panel they fail contrast, so they are lightened here rather than
+   the component being told which background it is on. */
+.hero .gain { color: #9fe3be; }
+.hero .loss { color: #ffb4ad; }
+.hero .big {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+/* The join code is read off a projector from the back of a room */
+.joincode {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 64px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+th {
+  text-align: left;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 12px;
+  background: #f2efe8;
+  white-space: nowrap;
+}
+
+td {
+  padding: 14px 12px;
+  border-top: 1px solid #ede9e1;
+  vertical-align: top;
+}
+
+th.right, td.right { text-align: right; }
+
+.table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow-x: auto;
+}
+
+.topbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.choice {
+  display: flex;
+  gap: 10px;
+}
+.choice button {
+  flex-grow: 1;
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+}
+.choice button[aria-pressed="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+/* Without this, the generic button:hover (dark background) wins the
+   specificity tie and paints these light-text toggle buttons illegibly. */
+.choice button:hover:not(:disabled) {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@media (max-width: 560px) {
+  h1 { font-size: 28px; }
+  .joincode { font-size: 44px; }
+  .hero .big { font-size: 32px; }
+}
