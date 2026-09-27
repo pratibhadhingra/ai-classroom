@@ -19,11 +19,28 @@ from decimal import Decimal, InvalidOperation
 
 
 def as_decimal(value: str | None, what: str) -> Decimal | None:
-    """Turn a request string into a Decimal, or say plainly that it is not a number."""
-    if value is None or value == "":
+    """Turn a request string into a Decimal, or say plainly that it is not a number.
+
+    Indian amounts are commonly written with grouping commas and a rupee sign --
+    a teacher setting a corpus types "1,00,000" far more naturally than "100000".
+    Rejecting that is the app being pedantic about formatting rather than about
+    money, so the separators are stripped before parsing. What is left must still
+    be a clean number: "12ab" is a typo worth reporting, not input to guess at.
+    """
+    if value is None:
         return None
+
+    cleaned = str(value).strip().replace(",", "").replace("₹", "").replace(" ", "")
+    if cleaned.lower().startswith("rs."):
+        cleaned = cleaned[3:]
+    elif cleaned.lower().startswith("rs"):
+        cleaned = cleaned[2:]
+
+    if cleaned == "":
+        return None
+
     try:
-        return Decimal(value)
+        return Decimal(cleaned)
     except (InvalidOperation, TypeError, ValueError):
         raise ValueError(f"{what} needs to be a number")
 

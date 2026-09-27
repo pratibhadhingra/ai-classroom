@@ -504,13 +504,23 @@ describe("teacher classes", () => {
     render(<TeacherClasses account={{ name: "Ms Rao" }} onOpen={onOpen} onExpired={notExpired} onSignOut={noop} />);
     await screen.findByText(/no classes yet/i);
     await user.type(screen.getByLabelText(/class name/i), "Class 11C");
+
+    // Typed the way a teacher writes an amount, commas and all. Asserting on
+    // what she types rather than on the pre-filled default keeps this test about
+    // the behaviour instead of about a constant that may change.
+    const corpus = screen.getByLabelText(/starting money/i);
+    await user.clear(corpus);
+    await user.type(corpus, "2,50,000");
+
     await user.click(screen.getByRole("button", { name: /^create class$/i }));
 
     await waitFor(() => expect(onOpen).toHaveBeenCalledWith(9));
     const posted = calls.find((call) => call.method === "POST");
     // The corpus must reach the server as a string -- see CLAUDE.md's money rules.
     expect(typeof posted.body.starting_corpus).toBe("string");
-    expect(posted.body.starting_corpus).toBe("100000.00");
+    // Sent through untouched. The browser never reformats or parses money; the
+    // server strips the separators in as_decimal() and stores an exact Decimal.
+    expect(posted.body.starting_corpus).toBe("2,50,000");
   });
 
   it("shows the server's message when creating a class fails", async () => {

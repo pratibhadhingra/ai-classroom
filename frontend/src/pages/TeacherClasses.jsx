@@ -6,7 +6,10 @@ import { Money } from "../components/Money";
 export default function TeacherClasses({ account, onOpen, onExpired, onSignOut }) {
   const [classes, setClasses] = useState(null);
   const [name, setName] = useState("");
-  const [corpus, setCorpus] = useState("100000.00");
+  // Pre-filled the way a teacher would write it, not the way a machine stores
+  // it. The API strips grouping commas, so this is a real editable value and
+  // not a display-only format.
+  const [corpus, setCorpus] = useState("1,00,000");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
 
@@ -62,7 +65,16 @@ export default function TeacherClasses({ account, onOpen, onExpired, onSignOut }
           </div>
           <div>
             <label htmlFor="corpus">Starting money for each student</label>
-            <input id="corpus" value={corpus} onChange={(e) => setCorpus(e.target.value)} />
+            <input
+              id="corpus"
+              value={corpus}
+              onChange={(e) => setCorpus(e.target.value)}
+              inputMode="decimal"
+              aria-describedby="corpus-hint"
+            />
+            <p id="corpus-hint" className="tiny">
+              Everyone in the class starts with this. Commas are fine.
+            </p>
           </div>
           {error && <div className="error">{error}</div>}
           <button type="submit" disabled={busy}>
