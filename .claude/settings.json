@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(backend/.venv/Scripts/python.exe:*)",
+      "Bash(backend/.venv/Scripts/pip.exe:*)",
+      "Bash(backend/.venv/Scripts/uvicorn.exe:*)",
+      "Bash(npm run:*)",
+      "Bash(npm install:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(curl -sL https://portal.amfiindia.com/*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)"
+    ]
+  }
+}
